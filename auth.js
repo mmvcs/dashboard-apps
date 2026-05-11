@@ -6,7 +6,7 @@
 const ZohoAuth = (() => {
 
   const CONFIG = {
-    clientId:     '1000.VEWCMSDWISB1B2QKHUZ0DQA6K5MX0B',
+    clientId:     '1000.Z5ZA1S5LYQU987R8R6ATJOZJA4IC0M',
     redirectUri:  'https://project-4nnzv.vercel.app/callback.html',
     authEndpoint: 'https://accounts.zoho.com/oauth/v2/auth',
     scope:        'ZohoConnect.portals.READ ZohoConnect.feeds.READ',
