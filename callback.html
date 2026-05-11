@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Signing you in… — MMV Travel Group</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #fdf9f0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #1a1a2e;
+    }
+    .wrap {
+      text-align: center;
+      padding: 24px;
+    }
+    .spinner {
+      width: 48px; height: 48px;
+      border: 3px solid #e2dff5;
+      border-top-color: #2d2d7a;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 20px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .msg {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #6b6b8a;
+    }
+    .error-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 32px;
+      max-width: 400px;
+      box-shadow: 0 4px 24px rgba(15,15,26,0.10);
+      text-align: center;
+    }
+    .error-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #b91c1c;
+      margin-bottom: 10px;
+    }
+    .error-msg {
+      font-size: 0.85rem;
+      color: #6b6b8a;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .btn {
+      display: inline-block;
+      background: #2d2d7a;
+      color: #fff;
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap" id="wrap">
+    <div class="spinner"></div>
+    <p class="msg">Signing you in…</p>
+  </div>
+
+  <script src="auth.js"></script>
+  <script>
+    (async function handleCallback() {
+      const wrap = document.getElementById('wrap');
+
+      function showError(message) {
+        wrap.innerHTML = `
+          <div class="error-card">
+            <div class="error-title">Sign-in Failed</div>
+            <p class="error-msg">${message}</p>
+            <button class="btn" onclick="window.location.href='/'">Return to Dashboard</button>
+          </div>`;
+      }
+
+      try {
+        // Zoho returns token in the URL hash fragment
+        const hash = window.location.hash.substring(1);
+        const params = new URLSearchParams(hash);
+
+        const accessToken  = params.get('access_token');
+        const expiresIn    = params.get('expires_in') || '3600';
+        const state        = params.get('state');
+        const error        = params.get('error');
+
+        if (error) {
+          showError(`Zoho returned an error: ${error}. Please try again or contact the home office.`);
+          return;
+        }
+
+        if (!accessToken) {
+          showError('No access token received. Please try signing in again.');
+          return;
+        }
+
+        // Validate state to prevent CSRF
+        const savedState = sessionStorage.getItem('mmv_oauth_state');
+        if (state && savedState && state !== savedState) {
+          showError('Security check failed. Please try signing in again.');
+          return;
+        }
+
+        // Fetch user info from Zoho
+        let userInfo = null;
+        try {
+          const res = await fetch('https://accounts.zoho.com/oauth/user/info', {
+            headers: { 'Authorization': `Zoho-oauthtoken ${accessToken}` }
+          });
+          if (res.ok) {
+            const data = await res.json();
+            userInfo = {
+              name:  data.Display_Name || data.First_Name || 'Advisor',
+              email: data.Email || '',
+              id:    data.ZUID || '',
+            };
+          }
+        } catch {
+          // User info is nice-to-have; don't block login if it fails
+          userInfo = { name: 'Advisor', email: '', id: '' };
+        }
+
+        // Store session
+        ZohoAuth.storeSession(accessToken, expiresIn, userInfo);
+
+        // Redirect back to where they came from
+        const returnPath = sessionStorage.getItem('mmv_return_path') || '/';
+        sessionStorage.removeItem('mmv_oauth_state');
+        window.location.href = returnPath;
+
+      } catch (err) {
+        showError('An unexpected error occurred. Please try again.');
+        console.error('Auth callback error:', err);
+      }
+    })();
+  </script>
+</body>
+</html>
