@@ -7,533 +7,416 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --midnight: #0f0f1a;
-      --navy: #1a1a3e;
-      --royal: #2d2d7a;
-      --gold: #f0b429;
-      --gold-light: #fde68a;
-      --gold-dim: #b88a1a;
-      --cream: #fdf9f0;
-      --text: #1a1a2e;
-      --muted: #6b6b8a;
-      --success: #0d7a4e;
-      --success-bg: #ecfdf5;
-      --border: #e2dff5;
-      --white: #ffffff;
+      --midnight: #0f0f1a; --navy: #1a1a3e; --royal: #2d2d7a;
+      --gold: #f0b429; --gold-light: #fde68a; --gold-dim: #b88a1a;
+      --cream: #fdf9f0; --text: #1a1a2e; --muted: #6b6b8a;
+      --success: #0d7a4e; --success-bg: #ecfdf5;
+      --border: #e2dff5; --white: #ffffff;
       --card-shadow: 0 4px 24px rgba(15,15,26,0.10);
       --transition: 0.18s cubic-bezier(.4,0,.2,1);
     }
-
-    body {
-      font-family: 'DM Sans', sans-serif;
-      background: var(--cream);
-      min-height: 100vh;
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
-      padding: 24px 16px 40px;
-      color: var(--text);
-    }
-
-    .card {
-      background: var(--white);
-      border-radius: 20px;
-      box-shadow: var(--card-shadow);
-      width: 100%;
-      max-width: 560px;
-      overflow: hidden;
-      animation: fadeUp 0.4s ease both;
-    }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(16px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .card-header {
-      background: linear-gradient(135deg, var(--midnight) 0%, var(--royal) 100%);
-      padding: 28px 32px 24px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .card-header::before {
-      content: '';
-      position: absolute;
-      top: -40px; right: -40px;
-      width: 160px; height: 160px;
-      border-radius: 50%;
-      background: rgba(240,180,41,0.08);
-    }
-
-    .header-top {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 6px;
-    }
-
-    .header-icon {
-      width: 44px; height: 44px;
-      background: linear-gradient(135deg, var(--gold), var(--gold-dim));
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
-      flex-shrink: 0;
-      box-shadow: 0 2px 8px rgba(240,180,41,0.35);
-    }
-
-    .header-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.35rem;
-      font-weight: 700;
-      color: var(--white);
-      line-height: 1.2;
-    }
-
-    .header-sub {
-      font-size: 0.72rem;
-      color: var(--gold-light);
-      font-weight: 500;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      margin-top: 8px;
-      opacity: 0.85;
-    }
-
-    /* User bar */
-    .user-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 10px 32px;
-      background: #f5f4ff;
-      border-bottom: 1px solid var(--border);
-      font-size: 0.78rem;
-      color: var(--muted);
-    }
-
+    body { font-family: 'DM Sans', sans-serif; background: var(--cream); min-height: 100vh; display: flex; align-items: flex-start; justify-content: center; padding: 24px 16px 40px; color: var(--text); }
+    .card { background: var(--white); border-radius: 20px; box-shadow: var(--card-shadow); width: 100%; max-width: 560px; overflow: hidden; animation: fadeUp 0.4s ease both; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    .card-header { background: linear-gradient(135deg, var(--midnight) 0%, var(--royal) 100%); padding: 28px 32px 24px; position: relative; overflow: hidden; }
+    .card-header::before { content: ''; position: absolute; top: -40px; right: -40px; width: 160px; height: 160px; border-radius: 50%; background: rgba(240,180,41,0.08); }
+    .header-top { display: flex; align-items: center; gap: 14px; margin-bottom: 6px; }
+    .header-icon { width: 44px; height: 44px; background: linear-gradient(135deg, var(--gold), var(--gold-dim)); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; box-shadow: 0 2px 8px rgba(240,180,41,0.35); }
+    .header-title { font-family: 'Playfair Display', serif; font-size: 1.35rem; font-weight: 700; color: var(--white); line-height: 1.2; }
+    .header-sub { font-size: 0.72rem; color: var(--gold-light); font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; margin-top: 8px; opacity: 0.85; }
+    .user-bar { display: flex; align-items: center; justify-content: space-between; padding: 10px 32px; background: #f5f4ff; border-bottom: 1px solid var(--border); font-size: 0.78rem; color: var(--muted); }
     .user-bar strong { color: var(--text); }
-
-    .btn-signout {
-      background: none;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 4px 10px;
-      font-size: 0.72rem;
-      font-family: 'DM Sans', sans-serif;
-      color: var(--muted);
-      cursor: pointer;
-      transition: background var(--transition);
-    }
+    .btn-signout { background: none; border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; font-size: 0.72rem; font-family: 'DM Sans', sans-serif; color: var(--muted); cursor: pointer; transition: background var(--transition); }
     .btn-signout:hover { background: var(--border); color: var(--text); }
-
     .card-body { padding: 28px 32px 32px; }
-
-    .notice {
-      background: #fffbeb;
-      border-left: 3px solid var(--gold);
-      border-radius: 0 8px 8px 0;
-      padding: 10px 14px;
-      margin-bottom: 24px;
-      font-size: 0.8rem;
-      color: #78520a;
-      line-height: 1.5;
-    }
-
+    .notice { background: #fffbeb; border-left: 3px solid var(--gold); border-radius: 0 8px 8px 0; padding: 10px 14px; margin-bottom: 24px; font-size: 0.8rem; color: #78520a; line-height: 1.5; }
     .field { margin-bottom: 18px; }
-
-    label {
-      display: block;
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 7px;
-    }
-
-    select, input[type="number"] {
-      width: 100%;
-      padding: 11px 14px;
-      border: 1.5px solid var(--border);
-      border-radius: 10px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.92rem;
-      color: var(--text);
-      background: var(--white);
-      appearance: none;
-      -webkit-appearance: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b6b8a' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 14px center;
-      transition: border-color var(--transition), box-shadow var(--transition);
-      cursor: pointer;
-    }
-
-    select:focus, input[type="number"]:focus {
-      outline: none;
-      border-color: var(--royal);
-      box-shadow: 0 0 0 3px rgba(45,45,122,0.09);
-    }
-
+    label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 7px; }
+    select, input[type="number"] { width: 100%; padding: 11px 14px; border: 1.5px solid var(--border); border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 0.92rem; color: var(--text); background: var(--white); appearance: none; -webkit-appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b6b8a' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; transition: border-color var(--transition), box-shadow var(--transition); cursor: pointer; }
+    select:focus, input[type="number"]:focus { outline: none; border-color: var(--royal); box-shadow: 0 0 0 3px rgba(45,45,122,0.09); }
     input[type="number"] { background-image: none; padding-left: 38px; }
-
     .price-wrap { position: relative; }
-    .price-wrap .dollar {
-      position: absolute;
-      left: 13px; top: 50%;
-      transform: translateY(-50%);
-      font-size: 0.9rem;
-      color: var(--muted);
-      font-weight: 500;
-      pointer-events: none;
-    }
-
-    .checkbox-card {
-      background: #f5f4ff;
-      border-radius: 10px;
-      padding: 12px 16px;
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      cursor: pointer;
-      transition: background var(--transition);
-    }
+    .price-wrap .dollar { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); font-size: 0.9rem; color: var(--muted); font-weight: 500; pointer-events: none; }
+    .checkbox-card { background: #f5f4ff; border-radius: 10px; padding: 12px 16px; display: flex; align-items: flex-start; gap: 12px; cursor: pointer; transition: background var(--transition); }
     .checkbox-card:hover { background: #ece9ff; }
-    .checkbox-card input[type="checkbox"] {
-      width: 18px; height: 18px;
-      accent-color: var(--royal);
-      margin-top: 2px;
-      flex-shrink: 0;
-      cursor: pointer;
-    }
+    .checkbox-card input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--royal); margin-top: 2px; flex-shrink: 0; cursor: pointer; }
     .checkbox-label { font-size: 0.88rem; font-weight: 500; color: var(--text); line-height: 1.4; }
-    .checkbox-note  { font-size: 0.75rem; color: var(--muted); margin-top: 3px; }
-
+    .checkbox-note { font-size: 0.75rem; color: var(--muted); margin-top: 3px; }
     .btn-row { display: flex; gap: 10px; margin-top: 8px; }
-
-    .btn-calc {
-      flex: 1;
-      background: linear-gradient(135deg, var(--midnight), var(--royal));
-      color: var(--white);
-      border: none;
-      border-radius: 10px;
-      padding: 13px 20px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.92rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: opacity var(--transition), transform var(--transition), box-shadow var(--transition);
-      box-shadow: 0 3px 12px rgba(15,15,26,0.18);
-    }
-    .btn-calc:hover { opacity: 0.92; transform: translateY(-1px); box-shadow: 0 5px 18px rgba(15,15,26,0.22); }
-    .btn-calc:active { transform: translateY(0); }
-
-    .btn-reset {
-      padding: 13px 18px;
-      border: 1.5px solid var(--border);
-      background: transparent;
-      border-radius: 10px;
-      font-family: 'DM Sans', sans-serif;
-      font-size: 0.88rem;
-      font-weight: 500;
-      color: var(--muted);
-      cursor: pointer;
-      transition: background var(--transition), color var(--transition);
-    }
+    .btn-calc { flex: 1; background: linear-gradient(135deg, var(--midnight), var(--royal)); color: var(--white); border: none; border-radius: 10px; padding: 13px 20px; font-family: 'DM Sans', sans-serif; font-size: 0.92rem; font-weight: 600; cursor: pointer; transition: opacity var(--transition), transform var(--transition), box-shadow var(--transition); box-shadow: 0 3px 12px rgba(15,15,26,0.18); }
+    .btn-calc:hover { opacity: 0.92; transform: translateY(-1px); }
+    .btn-reset { padding: 13px 18px; border: 1.5px solid var(--border); background: transparent; border-radius: 10px; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 500; color: var(--muted); cursor: pointer; transition: background var(--transition), color var(--transition); }
     .btn-reset:hover { background: var(--border); color: var(--text); }
-
     .result { margin-top: 22px; border-radius: 14px; overflow: hidden; animation: fadeUp 0.3s ease both; }
-    .result-inner {
-      background: var(--success-bg);
-      border: 1.5px solid #a7f3d0;
-      border-radius: 14px;
-      padding: 20px 24px;
-    }
-    .result-zero {
-      background: #fef9c3;
-      border: 1.5px solid #fde047;
-      border-radius: 14px;
-      padding: 16px 20px;
-      font-size: 0.88rem;
-      color: #713f12;
-      font-weight: 500;
-      line-height: 1.5;
-    }
+    .result-inner { background: var(--success-bg); border: 1.5px solid #a7f3d0; border-radius: 14px; padding: 20px 24px; }
+    .result-zero { background: #fef9c3; border: 1.5px solid #fde047; border-radius: 14px; padding: 16px 20px; font-size: 0.88rem; color: #713f12; font-weight: 500; line-height: 1.5; }
     .result-row { display: flex; align-items: center; justify-content: space-between; }
     .result-row + .result-row { margin-top: 12px; padding-top: 14px; border-top: 1px solid #a7f3d0; }
     .result-label { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: var(--success); }
-    .result-rate   { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; color: var(--success); }
+    .result-rate { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; color: var(--success); }
     .result-amount { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; color: var(--success); letter-spacing: -0.02em; }
-
     .divider { height: 1px; background: var(--border); margin: 26px 0 20px; }
     .footer-note { font-size: 0.72rem; color: var(--muted); text-align: center; line-height: 1.6; }
     .hidden { display: none; }
+
+    /* Login screen */
+    .login-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 24px; }
+    .login-card { background: #fff; border-radius: 20px; box-shadow: 0 4px 24px rgba(15,15,26,0.10); padding: 48px 40px; max-width: 420px; width: 100%; text-align: center; animation: fadeUp 0.4s ease both; }
+    .login-icon { width: 64px; height: 64px; background: linear-gradient(135deg, #0f0f1a, #2d2d7a); border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 20px; box-shadow: 0 3px 12px rgba(15,15,26,0.18); }
+    .login-title { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: #1a1a2e; margin-bottom: 8px; }
+    .login-sub { font-size: 0.88rem; color: #6b6b8a; margin-bottom: 32px; line-height: 1.5; }
+    .btn-login { display: inline-flex; align-items: center; gap: 10px; background: linear-gradient(135deg, #0f0f1a, #2d2d7a); color: #fff; border: none; border-radius: 10px; padding: 14px 28px; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; transition: opacity 0.18s, transform 0.18s; box-shadow: 0 3px 12px rgba(15,15,26,0.18); }
+    .btn-login:hover { opacity: 0.9; transform: translateY(-1px); }
+    .login-note { margin-top: 20px; font-size: 0.75rem; color: #9999b3; }
+
+    /* Spinner */
+    .spinner-wrap { min-height: 100vh; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 16px; }
+    .spinner { width: 40px; height: 40px; border: 3px solid #e2dff5; border-top-color: #2d2d7a; border-radius: 50%; animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
 
-<div class="card" id="appCard">
-  <div class="card-header">
-    <div class="header-top">
-      <div class="header-icon">🎟️</div>
-      <div class="header-title">Disney Ticket Commission Calculator</div>
-    </div>
-    <div class="header-sub">My Mickey Vacation Travel &amp; Dreams Fulfilled Travel</div>
-  </div>
-
-  <!-- User bar — populated after auth -->
-  <div class="user-bar" id="userBar">
-    <span>Welcome, <strong id="userName">Dream Designer</strong></span>
-    <button class="btn-signout" onclick="ZohoAuth.logout()">Sign Out</button>
-  </div>
-
-  <div class="card-body">
-    <div class="notice">
-      <strong>Important:</strong> Calculate one ticket type at a time. Enter the pre-tax price only.
-    </div>
-
-    <!-- Resort Location -->
-    <div class="field">
-      <label for="location">Resort Location</label>
-      <select id="location" onchange="handleLocationChange()">
-        <option value="wdw">Walt Disney World Resort (Florida)</option>
-        <option value="disneyland">Disneyland Resort (California)</option>
-      </select>
-    </div>
-
-    <!-- Special Events (WDW only) -->
-    <div class="field" id="specialTicketField">
-      <label for="specialTicket">Ticket Category</label>
-      <select id="specialTicket" onchange="handleSpecialTicketChange()">
-        <option value="none">Standard Multi-Day Ticket</option>
-        <option value="after-hours-epcot-mk">Disney After Hours – EPCOT / Magic Kingdom</option>
-        <option value="after-hours-hs">Disney After Hours – Hollywood Studios</option>
-        <option value="h2o-glow">H2O Glow After Hours</option>
-        <option value="halloween-party">Mickey's Not So Scary Halloween Party</option>
-        <option value="christmas-party">Mickey's Very Merry Christmas Party</option>
-        <option value="jollywood-nights">Disney Jollywood Nights</option>
-      </select>
-    </div>
-
-    <!-- Standard Options -->
-    <div id="standardOptions">
-      <div class="field">
-        <label for="ticketDays">Number of Ticket Days</label>
-        <select id="ticketDays">
-          <option value="">Select Days</option>
-          <option value="1">1 Day</option>
-          <option value="2">2 Days</option>
-          <option value="3">3 Days</option>
-          <option value="4">4 Days</option>
-          <option value="5">5 Days</option>
-          <option value="6">6 Days</option>
-          <option value="7">7 Days</option>
-          <option value="8">8 Days</option>
-          <option value="9">9 Days</option>
-          <option value="10">10 Days</option>
-        </select>
-      </div>
-
-      <div class="field">
-        <label for="ticketType">Ticket Options</label>
-        <select id="ticketType">
-          <option value="base">Base Ticket</option>
-          <option value="water-sports">With Water Park and Sports Option</option>
-          <option value="park-hopper">With Park Hopper® Option</option>
-          <option value="hopper-plus">With Park Hopper® Plus Option</option>
-        </select>
-      </div>
-
-      <div class="field hidden" id="lightningLaneField">
-        <label class="checkbox-card" for="lightningLane">
-          <input type="checkbox" id="lightningLane" />
-          <div>
-            <div class="checkbox-label">Includes Disney Lightning Lane Multi Pass Service</div>
-            <div class="checkbox-note">Note: Commission rate is the same with or without Lightning Lane</div>
-          </div>
-        </label>
-      </div>
-
-      <div class="field">
-        <label class="checkbox-card" for="isResident">
-          <input type="checkbox" id="isResident" />
-          <div>
-            <div class="checkbox-label" id="residentLabel">Florida Resident Ticket</div>
-          </div>
-        </label>
-      </div>
-    </div>
-
-    <!-- Price -->
-    <div class="field">
-      <label for="ticketPrice">Total Ticket Price (Pre-Tax)</label>
-      <div class="price-wrap">
-        <span class="dollar">$</span>
-        <input type="number" id="ticketPrice" placeholder="0.00" step="0.01" min="0" />
-      </div>
-    </div>
-
-    <div class="btn-row">
-      <button class="btn-calc" onclick="calculateCommission()">Calculate Commission</button>
-      <button class="btn-reset" onclick="resetForm()">Reset</button>
-    </div>
-
-    <div id="result" class="result hidden"></div>
-
-    <div class="divider"></div>
-    <p class="footer-note" id="footerNote">
-      Commission rates effective for orders on or after July 9, 2020. Does not include Annual Passes or Passholder discounted tickets.
-    </p>
-  </div>
-</div>
-
-<!-- Load auth library first -->
-<script src="auth.js"></script>
 <script>
-  // ── Boot: require auth before showing the app ──────────
-  ZohoAuth.requireAuth(function(user) {
-    // User is authenticated — personalize the UI
-    if (user && user.name) {
-      document.getElementById('userName').textContent = user.name;
-    }
+// ── Inline Auth Handler ─────────────────────────────────
+// Handles BOTH the OAuth callback (token in URL hash)
+// AND the auth gate (show login if no token stored)
+
+const AUTH = {
+  clientId:    '1000.IH4FU0AI7EMGT4KW6DZ2QLEIQR0TXQ',
+  redirectUri: 'https://project-4nnzv.vercel.app/',
+  endpoint:    'https://accounts.zoho.com/oauth/v2/auth',
+  scope:       'AaaServer.profile.READ',
+  tokenKey:    'mmv_zoho_token',
+  userKey:     'mmv_zoho_user',
+};
+
+function getStoredToken() {
+  try {
+    const raw = localStorage.getItem(AUTH.tokenKey);
+    if (!raw) return null;
+    const data = JSON.parse(raw);
+    if (Date.now() > data.expiresAt) { localStorage.removeItem(AUTH.tokenKey); return null; }
+    return data;
+  } catch { return null; }
+}
+
+function storeToken(token, expiresIn) {
+  localStorage.setItem(AUTH.tokenKey, JSON.stringify({
+    token, expiresAt: Date.now() + (parseInt(expiresIn) * 1000)
+  }));
+}
+
+function storeUser(userInfo) {
+  localStorage.setItem(AUTH.userKey, JSON.stringify(userInfo));
+}
+
+function getUser() {
+  try { return JSON.parse(localStorage.getItem(AUTH.userKey)) || { name: 'Dream Designer' }; }
+  catch { return { name: 'Dream Designer' }; }
+}
+
+function doLogin() {
+  const params = new URLSearchParams({
+    response_type: 'token',
+    client_id:     AUTH.clientId,
+    redirect_uri:  AUTH.redirectUri,
+    scope:         AUTH.scope,
+    state:         Math.random().toString(36).substring(2),
+    access_type:   'online',
   });
+  window.top.location.href = `${AUTH.endpoint}?${params.toString()}`;
+}
 
-  // ── Calculator Logic ───────────────────────────────────
+function doLogout() {
+  localStorage.removeItem(AUTH.tokenKey);
+  localStorage.removeItem(AUTH.userKey);
+  window.location.reload();
+}
 
-  function getLocation()     { return document.getElementById('location').value; }
-  function getSpecialTicket(){ return document.getElementById('specialTicket').value; }
-  function getDays()         { return parseInt(document.getElementById('ticketDays').value) || 0; }
-  function getTicketType()   { return document.getElementById('ticketType').value; }
-  function isResident()      { return document.getElementById('isResident').checked; }
+function showLoginScreen() {
+  document.body.innerHTML = `
+    <div class="login-wrap">
+      <div class="login-card">
+        <div class="login-icon">✈️</div>
+        <div class="login-title">MMV Travel Group</div>
+        <p class="login-sub">Sign in with your Zoho Connect account to access this tool.</p>
+        <button class="btn-login" onclick="doLogin()">Sign in with Zoho</button>
+        <p class="login-note">Use your existing Zoho Connect credentials.<br>Contact the home office if you need access.</p>
+      </div>
+    </div>`;
+}
 
-  function handleLocationChange() {
-    const loc = getLocation();
-    document.getElementById('specialTicketField').classList.toggle('hidden', loc !== 'wdw');
-    const typeSelect = document.getElementById('ticketType');
-    if (loc === 'wdw') {
-      typeSelect.innerHTML = `
-        <option value="base">Base Ticket</option>
-        <option value="water-sports">With Water Park and Sports Option</option>
-        <option value="park-hopper">With Park Hopper® Option</option>
-        <option value="hopper-plus">With Park Hopper® Plus Option</option>`;
-      document.getElementById('lightningLaneField').classList.add('hidden');
-      document.getElementById('residentLabel').textContent = 'Florida Resident Ticket';
-      document.getElementById('footerNote').textContent = 'Commission rates effective for orders on or after July 9, 2020. Does not include Annual Passes or Passholder discounted tickets.';
-    } else {
-      typeSelect.innerHTML = `
-        <option value="base">1 Park Per Day</option>
-        <option value="park-hopper">Park Hopper®</option>`;
-      document.getElementById('lightningLaneField').classList.remove('hidden');
-      document.getElementById('residentLabel').textContent = 'Southern California Resident Ticket';
-      document.getElementById('footerNote').textContent = 'Commission rates for Disneyland Resort tickets. Does not include Annual Passes or Passholder discounted tickets.';
-    }
-    resetForm(false);
-  }
+function showSpinner() {
+  document.body.innerHTML = `
+    <div class="spinner-wrap">
+      <div class="spinner"></div>
+      <p style="color:#6b6b8a;font-size:0.88rem">Signing you in…</p>
+    </div>`;
+}
 
-  function handleSpecialTicketChange() {
-    const isSpecial = getSpecialTicket() !== 'none';
-    document.getElementById('standardOptions').classList.toggle('hidden', isSpecial);
-    document.getElementById('result').classList.add('hidden');
-  }
+async function boot() {
+  // 1. Check if Zoho just redirected back with a token in the URL hash
+  const hash = window.location.hash.substring(1);
+  if (hash.includes('access_token')) {
+    showSpinner();
+    const params = new URLSearchParams(hash);
+    const token     = params.get('access_token');
+    const expiresIn = params.get('expires_in') || '3600';
 
-  function getCommissionRate() {
-    const loc     = getLocation();
-    const special = getSpecialTicket();
-    const days    = getDays();
-    const type    = getTicketType();
-    const resident = isResident();
+    if (token) {
+      storeToken(token, expiresIn);
 
-    if (loc === 'wdw') {
-      if (special === 'after-hours-epcot-mk') return 8;
-      if (special === 'after-hours-hs')       return 11;
-      if (special === 'h2o-glow')             return 8;
-      if (special === 'halloween-party')      return 8;
-      if (special === 'christmas-party')      return 8;
-      if (special === 'jollywood-nights')     return 8;
-
-      if (days === 3 && type === 'base'        && !resident) return 10;
-      if (days === 3 && type === 'water-sports'&& !resident) return 10;
-      if (days === 4 && type === 'base'        && !resident) return 10;
-
-      if (resident) {
-        if (days === 3) {
-          if (type === 'base')        return 3;
-          if (type === 'water-sports')return 5;
-          if (type === 'park-hopper') return 3;
-          if (type === 'hopper-plus') return 5;
+      // Try to fetch user info
+      try {
+        const res = await fetch('https://accounts.zoho.com/oauth/user/info', {
+          headers: { 'Authorization': `Zoho-oauthtoken ${token}` }
+        });
+        if (res.ok) {
+          const data = await res.json();
+          storeUser({
+            name:  data.Display_Name || data.First_Name || 'Dream Designer',
+            email: data.Email || '',
+          });
         }
-        if (days === 4) {
-          if (type === 'base')        return 3;
-          if (type === 'water-sports')return 7;
-          if (type === 'park-hopper') return 6;
-          if (type === 'hopper-plus') return 7;
-        }
-        if (days >= 5) return type === 'base' ? 8 : 10;
-      }
+      } catch { storeUser({ name: 'Dream Designer', email: '' }); }
 
-      if (!resident && days >= 3) {
-        if (days === 3 || days === 4) return 8;
-        if (days >= 5) return type === 'base' ? 8 : 10;
-      }
-    } else {
-      if (days === 3) return type === 'base' ? 4.5 : 5.0;
-      if (days === 4) return type === 'base' ? 5.5 : 6.0;
-      if (days >= 5)  return type === 'base' ? 5.5 : 6.0;
-    }
-    return 0;
-  }
-
-  function calculateCommission() {
-    const price   = parseFloat(document.getElementById('ticketPrice').value);
-    const special = getSpecialTicket();
-    const days    = getDays();
-    const loc     = getLocation();
-    const resultEl = document.getElementById('result');
-
-    if (isNaN(price) || price <= 0) { alert('Please enter a valid ticket price.'); return; }
-    if (loc === 'wdw' && special === 'none' && !days) { alert('Please select the number of ticket days.'); return; }
-    if (loc === 'disneyland' && !days) { alert('Please select the number of ticket days.'); return; }
-
-    const rate = getCommissionRate();
-    resultEl.classList.remove('hidden');
-
-    if (rate === 0) {
-      resultEl.innerHTML = `<div class="result-zero">⚠️ No commission is available for this ticket type. This includes 1–2 day tickets, Annual Passes, and Passholder discounted tickets.</div>`;
+      // Clean URL and show app
+      history.replaceState(null, '', '/');
+      showApp();
       return;
     }
-
-    const amount = (price * rate / 100).toFixed(2);
-    resultEl.innerHTML = `
-      <div class="result-inner">
-        <div class="result-row">
-          <span class="result-label">Commission Rate</span>
-          <span class="result-rate">${rate}%</span>
-        </div>
-        <div class="result-row">
-          <span class="result-label">Your Commission</span>
-          <span class="result-amount">$${amount}</span>
-        </div>
-      </div>`;
   }
 
-  function resetForm(resetLocation = true) {
-    if (resetLocation) { document.getElementById('location').value = 'wdw'; handleLocationChange(); }
-    const sp = document.getElementById('specialTicket');
-    if (sp) sp.value = 'none';
-    document.getElementById('standardOptions').classList.remove('hidden');
-    const d = document.getElementById('ticketDays'); if (d) d.value = '';
-    const t = document.getElementById('ticketType'); if (t) t.value = 'base';
-    document.getElementById('isResident').checked = false;
-    const ll = document.getElementById('lightningLane'); if (ll) ll.checked = false;
-    document.getElementById('ticketPrice').value = '';
-    document.getElementById('result').classList.add('hidden');
+  // 2. Check if we already have a valid stored token
+  if (getStoredToken()) {
+    showApp();
+    return;
   }
+
+  // 3. Not authenticated — show login screen
+  showLoginScreen();
+}
+
+function showApp() {
+  const user = getUser();
+  document.body.innerHTML = appHTML(user.name || 'Dream Designer');
+}
+
+function appHTML(userName) {
+  return `
+    <div class="card">
+      <div class="card-header">
+        <div class="header-top">
+          <div class="header-icon">🎟️</div>
+          <div class="header-title">Disney Ticket Commission Calculator</div>
+        </div>
+        <div class="header-sub">My Mickey Vacation Travel &amp; Dreams Fulfilled Travel</div>
+      </div>
+
+      <div class="user-bar">
+        <span>Welcome, <strong>${userName}</strong></span>
+        <button class="btn-signout" onclick="doLogout()">Sign Out</button>
+      </div>
+
+      <div class="card-body">
+        <div class="notice">
+          <strong>Important:</strong> Calculate one ticket type at a time. Enter the pre-tax price only.
+        </div>
+
+        <div class="field">
+          <label for="location">Resort Location</label>
+          <select id="location" onchange="handleLocationChange()">
+            <option value="wdw">Walt Disney World Resort (Florida)</option>
+            <option value="disneyland">Disneyland Resort (California)</option>
+          </select>
+        </div>
+
+        <div class="field" id="specialTicketField">
+          <label for="specialTicket">Ticket Category</label>
+          <select id="specialTicket" onchange="handleSpecialTicketChange()">
+            <option value="none">Standard Multi-Day Ticket</option>
+            <option value="after-hours-epcot-mk">Disney After Hours – EPCOT / Magic Kingdom</option>
+            <option value="after-hours-hs">Disney After Hours – Hollywood Studios</option>
+            <option value="h2o-glow">H2O Glow After Hours</option>
+            <option value="halloween-party">Mickey's Not So Scary Halloween Party</option>
+            <option value="christmas-party">Mickey's Very Merry Christmas Party</option>
+            <option value="jollywood-nights">Disney Jollywood Nights</option>
+          </select>
+        </div>
+
+        <div id="standardOptions">
+          <div class="field">
+            <label for="ticketDays">Number of Ticket Days</label>
+            <select id="ticketDays">
+              <option value="">Select Days</option>
+              <option value="1">1 Day</option><option value="2">2 Days</option>
+              <option value="3">3 Days</option><option value="4">4 Days</option>
+              <option value="5">5 Days</option><option value="6">6 Days</option>
+              <option value="7">7 Days</option><option value="8">8 Days</option>
+              <option value="9">9 Days</option><option value="10">10 Days</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="ticketType">Ticket Options</label>
+            <select id="ticketType">
+              <option value="base">Base Ticket</option>
+              <option value="water-sports">With Water Park and Sports Option</option>
+              <option value="park-hopper">With Park Hopper® Option</option>
+              <option value="hopper-plus">With Park Hopper® Plus Option</option>
+            </select>
+          </div>
+
+          <div class="field hidden" id="lightningLaneField">
+            <label class="checkbox-card" for="lightningLane">
+              <input type="checkbox" id="lightningLane" />
+              <div>
+                <div class="checkbox-label">Includes Disney Lightning Lane Multi Pass Service</div>
+                <div class="checkbox-note">Commission rate is the same with or without Lightning Lane</div>
+              </div>
+            </label>
+          </div>
+
+          <div class="field">
+            <label class="checkbox-card" for="isResident">
+              <input type="checkbox" id="isResident" />
+              <div><div class="checkbox-label" id="residentLabel">Florida Resident Ticket</div></div>
+            </label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="ticketPrice">Total Ticket Price (Pre-Tax)</label>
+          <div class="price-wrap">
+            <span class="dollar">$</span>
+            <input type="number" id="ticketPrice" placeholder="0.00" step="0.01" min="0" />
+          </div>
+        </div>
+
+        <div class="btn-row">
+          <button class="btn-calc" onclick="calculateCommission()">Calculate Commission</button>
+          <button class="btn-reset" onclick="resetForm()">Reset</button>
+        </div>
+
+        <div id="result" class="result hidden"></div>
+
+        <div class="divider"></div>
+        <p class="footer-note" id="footerNote">
+          Commission rates effective for orders on or after July 9, 2020. Does not include Annual Passes or Passholder discounted tickets.
+        </p>
+      </div>
+    </div>`;
+}
+
+// Run boot immediately
+boot();
+</script>
+
+<script>
+// ── Calculator Logic (runs after showApp injects HTML) ──
+
+function handleLocationChange() {
+  const loc = document.getElementById('location').value;
+  document.getElementById('specialTicketField').classList.toggle('hidden', loc !== 'wdw');
+  const typeSelect = document.getElementById('ticketType');
+  if (loc === 'wdw') {
+    typeSelect.innerHTML = `
+      <option value="base">Base Ticket</option>
+      <option value="water-sports">With Water Park and Sports Option</option>
+      <option value="park-hopper">With Park Hopper® Option</option>
+      <option value="hopper-plus">With Park Hopper® Plus Option</option>`;
+    document.getElementById('lightningLaneField').classList.add('hidden');
+    document.getElementById('residentLabel').textContent = 'Florida Resident Ticket';
+    document.getElementById('footerNote').textContent = 'Commission rates effective for orders on or after July 9, 2020. Does not include Annual Passes or Passholder discounted tickets.';
+  } else {
+    typeSelect.innerHTML = `
+      <option value="base">1 Park Per Day</option>
+      <option value="park-hopper">Park Hopper®</option>`;
+    document.getElementById('lightningLaneField').classList.remove('hidden');
+    document.getElementById('residentLabel').textContent = 'Southern California Resident Ticket';
+    document.getElementById('footerNote').textContent = 'Disneyland Resort tickets. Does not include Annual Passes or Passholder discounted tickets.';
+  }
+  resetForm(false);
+}
+
+function handleSpecialTicketChange() {
+  const isSpecial = document.getElementById('specialTicket').value !== 'none';
+  document.getElementById('standardOptions').classList.toggle('hidden', isSpecial);
+  document.getElementById('result').classList.add('hidden');
+}
+
+function getCommissionRate() {
+  const loc      = document.getElementById('location').value;
+  const special  = document.getElementById('specialTicket').value;
+  const days     = parseInt(document.getElementById('ticketDays').value) || 0;
+  const type     = document.getElementById('ticketType').value;
+  const resident = document.getElementById('isResident').checked;
+
+  if (loc === 'wdw') {
+    if (special === 'after-hours-epcot-mk') return 8;
+    if (special === 'after-hours-hs')       return 11;
+    if (special === 'h2o-glow')             return 8;
+    if (special === 'halloween-party')      return 8;
+    if (special === 'christmas-party')      return 8;
+    if (special === 'jollywood-nights')     return 8;
+    if (days === 3 && type === 'base'         && !resident) return 10;
+    if (days === 3 && type === 'water-sports' && !resident) return 10;
+    if (days === 4 && type === 'base'         && !resident) return 10;
+    if (resident) {
+      if (days === 3) { if (type==='base') return 3; if (type==='water-sports') return 5; if (type==='park-hopper') return 3; if (type==='hopper-plus') return 5; }
+      if (days === 4) { if (type==='base') return 3; if (type==='water-sports') return 7; if (type==='park-hopper') return 6; if (type==='hopper-plus') return 7; }
+      if (days >= 5) return type === 'base' ? 8 : 10;
+    }
+    if (!resident && days >= 3) {
+      if (days === 3 || days === 4) return 8;
+      if (days >= 5) return type === 'base' ? 8 : 10;
+    }
+  } else {
+    if (days === 3) return type === 'base' ? 4.5 : 5.0;
+    if (days === 4) return type === 'base' ? 5.5 : 6.0;
+    if (days >= 5)  return type === 'base' ? 5.5 : 6.0;
+  }
+  return 0;
+}
+
+function calculateCommission() {
+  const price    = parseFloat(document.getElementById('ticketPrice').value);
+  const special  = document.getElementById('specialTicket').value;
+  const days     = parseInt(document.getElementById('ticketDays').value) || 0;
+  const loc      = document.getElementById('location').value;
+  const resultEl = document.getElementById('result');
+
+  if (isNaN(price) || price <= 0) { alert('Please enter a valid ticket price.'); return; }
+  if (loc === 'wdw' && special === 'none' && !days) { alert('Please select the number of ticket days.'); return; }
+  if (loc === 'disneyland' && !days) { alert('Please select the number of ticket days.'); return; }
+
+  const rate = getCommissionRate();
+  resultEl.classList.remove('hidden');
+  if (rate === 0) {
+    resultEl.innerHTML = `<div class="result-zero">⚠️ No commission available for this ticket type. Includes 1–2 day tickets, Annual Passes, and Passholder discounted tickets.</div>`;
+    return;
+  }
+  const amount = (price * rate / 100).toFixed(2);
+  resultEl.innerHTML = `
+    <div class="result-inner">
+      <div class="result-row"><span class="result-label">Commission Rate</span><span class="result-rate">${rate}%</span></div>
+      <div class="result-row"><span class="result-label">Your Commission</span><span class="result-amount">$${amount}</span></div>
+    </div>`;
+}
+
+function resetForm(resetLocation = true) {
+  if (resetLocation) { document.getElementById('location').value = 'wdw'; handleLocationChange(); }
+  const sp = document.getElementById('specialTicket'); if (sp) sp.value = 'none';
+  document.getElementById('standardOptions').classList.remove('hidden');
+  const d = document.getElementById('ticketDays'); if (d) d.value = '';
+  const t = document.getElementById('ticketType'); if (t) t.value = 'base';
+  document.getElementById('isResident').checked = false;
+  const ll = document.getElementById('lightningLane'); if (ll) ll.checked = false;
+  document.getElementById('ticketPrice').value = '';
+  document.getElementById('result').classList.add('hidden');
+}
 </script>
 
 </body>
