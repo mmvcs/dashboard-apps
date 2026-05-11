@@ -9,7 +9,7 @@ const ZohoAuth = (() => {
     clientId:     '1000.IH4FU0AI7EMGT4KW6DZ2QLEIQR0TXQ',
     redirectUri:  'https://project-4nnzv.vercel.app/callback.html',
     authEndpoint: 'https://accounts.zoho.com/oauth/v2/auth',
-    scope:        'ZohoConnect.portals.READ ZohoConnect.feeds.READ',
+    scope:        'AaaServer.profile.READ',
     tokenKey:     'mmv_zoho_token',
     userKey:      'mmv_zoho_user',
   };
