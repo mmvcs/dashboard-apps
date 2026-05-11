@@ -195,8 +195,14 @@ async function boot() {
     return;
   }
 
-  // 3. Not authenticated — show login screen
-  showLoginScreen();
+  // 3. Not authenticated
+  // In iframe (Zoho Connect): break out and auth silently
+  // Standalone: show login screen
+  if (window.self !== window.top) {
+    doLogin();
+  } else {
+    showLoginScreen();
+  }
 }
 
 function showApp() {
