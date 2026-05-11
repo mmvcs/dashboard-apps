@@ -71,7 +71,8 @@ const ZohoAuth = (() => {
       prompt:        'consent',
     });
 
-    window.location.href = `${CONFIG.authEndpoint}?${params.toString()}`;
+    // Break out of Zoho Connect iframe — Zoho blocks its own login inside iframes
+    window.top.location.href = `${CONFIG.authEndpoint}?${params.toString()}`;
   }
 
   function logout() {
