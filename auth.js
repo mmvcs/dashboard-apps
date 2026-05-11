@@ -18,17 +18,17 @@ const ZohoAuth = (() => {
 
   function generateState() {
     const state = Math.random().toString(36).substring(2, 15);
-    sessionStorage.setItem('mmv_oauth_state', state);
+    localStorage.setItem('mmv_oauth_state', state);
     return state;
   }
 
   function getStoredToken() {
     try {
-      const raw = sessionStorage.getItem(CONFIG.tokenKey);
+      const raw = localStorage.getItem(CONFIG.tokenKey);
       if (!raw) return null;
       const data = JSON.parse(raw);
       if (Date.now() > data.expiresAt) {
-        sessionStorage.removeItem(CONFIG.tokenKey);
+        localStorage.removeItem(CONFIG.tokenKey);
         return null;
       }
       return data;
@@ -37,7 +37,7 @@ const ZohoAuth = (() => {
 
   function getStoredUser() {
     try {
-      const raw = sessionStorage.getItem(CONFIG.userKey);
+      const raw = localStorage.getItem(CONFIG.userKey);
       return raw ? JSON.parse(raw) : null;
     } catch { return null; }
   }
@@ -58,8 +58,7 @@ const ZohoAuth = (() => {
   }
 
   function login(returnPath) {
-    // Save where to return after login
-    sessionStorage.setItem('mmv_return_path', returnPath || window.location.pathname);
+    localStorage.setItem('mmv_return_path', returnPath || window.location.pathname);
 
     const params = new URLSearchParams({
       response_type: 'token',
@@ -68,43 +67,38 @@ const ZohoAuth = (() => {
       scope:         CONFIG.scope,
       state:         generateState(),
       access_type:   'online',
-      prompt:        'consent',
     });
 
-    // Break out of Zoho Connect iframe — Zoho blocks its own login inside iframes
+    // Break out of Zoho Connect iframe
     window.top.location.href = `${CONFIG.authEndpoint}?${params.toString()}`;
   }
 
   function logout() {
-    sessionStorage.removeItem(CONFIG.tokenKey);
-    sessionStorage.removeItem(CONFIG.userKey);
-    sessionStorage.removeItem('mmv_return_path');
+    localStorage.removeItem(CONFIG.tokenKey);
+    localStorage.removeItem(CONFIG.userKey);
+    localStorage.removeItem('mmv_return_path');
+    localStorage.removeItem('mmv_oauth_state');
     window.location.reload();
   }
 
-  // Call this on every protected page — redirects to Zoho if not logged in
   function requireAuth(onSuccess) {
     if (isAuthenticated()) {
       if (typeof onSuccess === 'function') onSuccess(getUser());
       return;
     }
-    // Not authenticated — show login screen
     showLoginScreen();
   }
 
-  // Store token and user info after callback
   function storeSession(token, expiresIn, userInfo) {
     const session = {
       token,
       expiresAt: Date.now() + (parseInt(expiresIn) * 1000),
     };
-    sessionStorage.setItem(CONFIG.tokenKey, JSON.stringify(session));
+    localStorage.setItem(CONFIG.tokenKey, JSON.stringify(session));
     if (userInfo) {
-      sessionStorage.setItem(CONFIG.userKey, JSON.stringify(userInfo));
+      localStorage.setItem(CONFIG.userKey, JSON.stringify(userInfo));
     }
   }
-
-  // ── Login Screen UI ──────────────────────────────────────
 
   function showLoginScreen() {
     document.body.innerHTML = `
